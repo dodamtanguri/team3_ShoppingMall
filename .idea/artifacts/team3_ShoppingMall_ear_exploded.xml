@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-ear" name="team3_ShoppingMall:ear exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/team3_ShoppingMall_ear_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="team3_ShoppingMall/javaeeApplication/javaEEApplication" />
+      <element id="module-output" name="team3_ShoppingMall" />
+      <element id="directory" name="lib">
+        <element id="library" level="project" name="ㅇㅇ" />
+        <element id="library" level="project" name="lib" />
+      </element>
+      <element id="javaee-facet-resources" facet="team3_ShoppingMall/web/Web" />
+    </root>
+  </artifact>
+</component>

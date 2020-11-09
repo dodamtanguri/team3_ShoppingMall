@@ -1,0 +1,17 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="team3_ShoppingMall:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/team3_ShoppingMall_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="team3_ShoppingMall/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="team3_ShoppingMall" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="ㅇㅇ" />
+          <element id="library" level="project" name="lib" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

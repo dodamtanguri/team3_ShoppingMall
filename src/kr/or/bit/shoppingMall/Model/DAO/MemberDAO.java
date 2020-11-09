@@ -26,6 +26,7 @@ public class MemberDAO {
         int resultRow = 0;
         Connection conn = null;
         PreparedStatement pstmt = null;
+        System.out.println("connectio 확인");
         try {
             conn =instance.getConnection();
             pstmt = conn.prepareStatement(SIGNUP_MEMBER_QUERY);

@@ -4,6 +4,8 @@ import kr.or.bit.shoppingMall.Action.ActionForward;
 import kr.or.bit.shoppingMall.Action.action;
 import kr.or.bit.shoppingMall.Service.SignUpMemberService;
 import kr.or.bit.shoppingMall.Service.deleteMemberService;
+import kr.or.bit.shoppingMall.Service.mainService;
+import kr.or.bit.shoppingMall.Service.signUpPage;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,24 +24,33 @@ public class FrontController extends HttpServlet {
     }
 
     private void doProcess(HttpServletRequest request, HttpServletResponse response) throws Exception {
-       // request.setCharacterEncoding("UTF-8");
+        // request.setCharacterEncoding("UTF-8");
         response.setContentType("text/html; UTF-8");
         String requestURI = request.getRequestURI();
-        System.out.println(requestURI);
+
         String contextPath = request.getContextPath();
         String urlCommand = requestURI.substring(contextPath.length());
         String method = request.getMethod();
-        System.out.println(method + " " + urlCommand);
+
 
         action action = null;
-        ActionForward forward = null;
+        ActionForward forward = new ActionForward();
+        //ActionForward 초기화 해주기 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-        if (urlCommand.equals("/Main.do")) { // 메인 페이지
-//            action = new mainService();
-//            forward = action.execute(request,response);
-        } else  if(urlCommand.equals("/signUpPage.do")) {
+        if (urlCommand.equals("/main.do")) { // 메인 페이지
+            action = new mainService();
+            forward = action.execute(request, response);
+        } else if (urlCommand.equals("/signUpPage.do")) {
+            System.out.println("2");
+            assert forward != null;
+            forward.setRedirect(false);
+            System.out.println("2-1");
+            forward.setPath("/WEB-INF/views/SignUp.jsp");
+        } else if (urlCommand.equals("/SignUp.do")) {
+            System.out.println("4");
             action = new SignUpMemberService();
-            forward = action.execute(request,response);
+            forward = action.execute(request, response);
+
         } else if (urlCommand.equals("/deleteMember.do")) {
             System.out.println("urlCommand : " + urlCommand);
             action = new deleteMemberService();
@@ -61,12 +72,20 @@ public class FrontController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
 
-        //this.doProcess(request, response);
+        try {
+            this.doProcess(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws
             ServletException, IOException {
-        //this.doProcess(request, response);
+        try {
+            this.doProcess(request, response);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
 

@@ -14,6 +14,7 @@
     <title>Sign Up MEMBER</title>
 </head>
 <body>
+
 <form action="SignUp.do" method="post">
     <table>
        <tr><td>ID</td><td>

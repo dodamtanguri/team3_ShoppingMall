@@ -1,5 +1,6 @@
 package kr.or.bit.shoppingMall.Model.DAO;
 
+import jdk.dynalink.beans.StaticClass;
 import kr.or.bit.shoppingMall.Model.DTO.MemberDTO;
 import kr.or.bit.shoppingMall.Utils.ConnectionPoolHelper;
 
@@ -14,6 +15,7 @@ import static kr.or.bit.shoppingMall.Model.SQL.MemberSQL.*;
 public class MemberDAO {
     private static ConnectionPoolHelper instance = ConnectionPoolHelper.getInstance();
     private static MemberDAO dao;
+
     //싱글톤 패턴
 //    public DAO() {}
 //    public static DAO getInstance() {
@@ -28,13 +30,13 @@ public class MemberDAO {
         PreparedStatement pstmt = null;
         System.out.println("connectio 확인");
         try {
-            conn =instance.getConnection();
+            conn = instance.getConnection();
             pstmt = conn.prepareStatement(SIGNUP_MEMBER_QUERY);
-            pstmt.setString(1,dto.getId());
+            pstmt.setString(1, dto.getId());
             pstmt.setString(2, dto.getPwd());
-            pstmt.setString(3,dto.getName());
-            pstmt.setString(4,dto.getHp());
-            pstmt.setString(5,dto.getCard_num());
+            pstmt.setString(3, dto.getName());
+            pstmt.setString(4, dto.getHp());
+            pstmt.setString(5, dto.getCard_num());
             pstmt.setString(6, dto.getAddress());
 
             resultRow = pstmt.executeUpdate();
@@ -44,9 +46,24 @@ public class MemberDAO {
         } finally {
             instance.freeConnection(conn, pstmt);
         }
-    return resultRow;
+        return resultRow;
 
     }
+////로그인
+//    public static int signIn(String id, String pwd) {
+//        int resultRow = 0;
+//        Connection conn = null;
+//        PreparedStatement pstmt = null;
+//        ResultSet rs = null;
+//        try  {
+//            conn = instance.getConnection();
+//            pstmt = conn.prepareStatement(SIGNIN_MEMBER_QUERY);
+//
+//
+//        } catch (SQLException throwables) {
+//            throwables.printStackTrace();
+//        }
+//    }
 
     //회원탈퇴
     public static int deleteMember(String id) {
@@ -67,26 +84,33 @@ public class MemberDAO {
         return resultRow;
 
     }
-    //id랑 비밀번호 일치하는지 확인
-    public static MemberDTO getMember(String id) {
+
+    //SignIn  >> id랑 비밀번호 일치하는지 확인
+    public int getMember(String id, String pwd) {
         MemberDTO dto = null;
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
+
         try {
             conn = instance.getConnection();
             pstmt = conn.prepareStatement(SIGNIN_MEMBER_QUERY);
             pstmt.setString(1, id);
             rs = pstmt.executeQuery();
-            while (rs.next()) {
-                dto = MemberDAO.setMember(rs);
+            if (rs.next()) {
+                if (rs.getString(1).equals(pwd)) {
+                    return 1;
+                } else {
+                    return 0;
+                }
             }
+
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } finally {
-            instance.freeConnection(conn,pstmt,rs);
+            instance.freeConnection(conn, pstmt, rs);
         }
-        return dto;
+        return -1;
     }
 
     private static MemberDTO setMember(ResultSet rs) throws SQLException {
@@ -97,7 +121,7 @@ public class MemberDAO {
         String delflag = rs.getString("DELFLAG").trim();
         String card_num = rs.getString("CARD_NUM").trim();
         String address = rs.getString("ADDRESS").trim();
-        MemberDTO dto = new MemberDTO(id,pwd,name,hp,delflag,card_num,address);
+        MemberDTO dto = new MemberDTO(id, pwd, name, hp, delflag, card_num, address);
         return dto;
     }
 

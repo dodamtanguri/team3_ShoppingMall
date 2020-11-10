@@ -2,10 +2,7 @@ package kr.or.bit.shoppingMall.Controller;
 
 import kr.or.bit.shoppingMall.Action.ActionForward;
 import kr.or.bit.shoppingMall.Action.action;
-import kr.or.bit.shoppingMall.Service.SignUpMemberService;
-import kr.or.bit.shoppingMall.Service.deleteMemberService;
-import kr.or.bit.shoppingMall.Service.mainService;
-import kr.or.bit.shoppingMall.Service.signUpPage;
+import kr.or.bit.shoppingMall.Service.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,7 +38,7 @@ public class FrontController extends HttpServlet {
             forward = action.execute(request, response);
         } else if (urlCommand.equals("/signUpPage.do")) {
             System.out.println("2");
-            assert forward != null;
+            //assert forward != null;
             forward.setRedirect(false);
             System.out.println("2-1");
             forward.setPath("/WEB-INF/views/SignUp.jsp");
@@ -55,6 +52,16 @@ public class FrontController extends HttpServlet {
             action = new deleteMemberService();
             System.out.println("action : " + "deleteMemberService");
             forward = action.execute(request, response);
+
+        } else if (urlCommand.equals("/SignInPage.do")) {
+            System.out.println("signInPage페이지 연결");
+            forward.setRedirect(false);
+            forward.setPath("/WEB-INF/views/SignInPage.jsp");
+
+        }else if(urlCommand.equals("/SignIn.do")) {
+            System.out.println("SignIn.do페이");
+            action = new SignInMemberService();
+            forward = action.execute(request,response);
         }
 
 
@@ -62,6 +69,7 @@ public class FrontController extends HttpServlet {
             response.sendRedirect(forward.getPath());
         } else {
             RequestDispatcher dis = request.getRequestDispatcher(forward.getPath());
+            System.out.println(dis);
             dis.forward(request, response);
 
         }

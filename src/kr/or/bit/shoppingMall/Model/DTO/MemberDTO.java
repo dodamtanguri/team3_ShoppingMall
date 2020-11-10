@@ -41,6 +41,12 @@ public class MemberDTO {
         this.card_num = card_num;
         this. address = address;
     }
+
+    public MemberDTO(String id, String pwd) {
+        this.id = id;
+        this.pwd = pwd;
+    }
+
     public String getId() {
         return id;
     }

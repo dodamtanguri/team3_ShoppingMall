@@ -14,6 +14,12 @@
     <title>$Title$</title>
   </head>
   <body>
+  <form method="post" action="SignInPage.do">
+    아이디 : <input type="text"> <br>
+    비밀번호 : <input type="text"> <br>
+    <hr>
+    <input type="submit"> 제출
+  </form>
   <form method="post" action="signUpPage.do">
     아이디 : <input type="text"> <br>
     비밀번호 : <input type="text"> <br>
